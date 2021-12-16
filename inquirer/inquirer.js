@@ -1,5 +1,9 @@
 var inquirer = require('inquirer');
 
+const mysql = require('mysql2')
+const db = mysql.createConnection('mysql://root:ElsaRoseyButterScotch@localhost:3306/employees_db')
+
+
 inquirer.prompt(
   [{
     type: 'list',
@@ -9,7 +13,7 @@ inquirer.prompt(
   }]
 )
 .then((answers) => {
-
+  db.query()
 })
   .catch((error) => {
     if (error.isTtyError) {
@@ -18,3 +22,4 @@ inquirer.prompt(
       console.log(error)
     }
   });
+
