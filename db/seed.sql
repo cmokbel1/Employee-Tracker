@@ -19,5 +19,5 @@ CREATE TABLE employee {
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30) NOT NULL,
   FOREIGN KEY role_id REFERENCES role(id) NOT NULL,
-  FOREIGN KEY manager_id REFERENCES 
+  FOREIGN KEY manager_id REFERENCES employee(id)
 };
