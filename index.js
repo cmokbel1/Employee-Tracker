@@ -159,6 +159,24 @@ function addEmployees() {
     console.log('------------CURRENT MANAGERS------------')
     console.log('----INSERT EMPLOYEE ID AS MANAGER ID----')
     console.log('------------CURRENT MANAGERS------------')
+    console.log('')
+    console.log('')
+    db.query('SELECT * FROM roles', (err, roles) => {
+      if (err) { console.log(err) }
+      console.log('-----------------------------------------------')
+      console.log('---------------------ROLES---------------------')
+      console.log('-----------------------------------------------')
+      console.log('')
+      console.log('')
+      console.table(roles)
+      console.log('')
+      console.log('')
+      console.log('-----------------------------------------------')
+      console.log('---------------------ROLES---------------------')
+      console.log('-----------------------------------------------')
+      console.log('')
+      console.log('')
+    
   inquirer.prompt([
     {
       type:'input',
@@ -189,6 +207,7 @@ function addEmployees() {
       })
     })
  })
+})
 }
 
 // VIEW FUNCTIONS 
@@ -214,17 +233,17 @@ function viewDepartments() {
 function viewEmployees() {
   db.query('SELECT * FROM employee', (err, employees) => {
     if (err) { console.log(err) }
-    console.log('----------------------------------')
-    console.log('-------------EMPLOYEES-----------')
-    console.log('----------------------------------')
+    console.log('--------------------------------------------')
+    console.log('------------------EMPLOYEES-----------------')
+    console.log('--------------------------------------------')
     console.log('')
     console.log('')
     console.table(employees)
     console.log('')
     console.log('')
-    console.log('---------------------------------')
-    console.log('------------EMPLOYEES------------')
-    console.log('---------------------------------')
+    console.log('--------------------------------------------')
+    console.log('------------------EMPLOYEES-----------------')
+    console.log('--------------------------------------------')
     start()
   })
 }
@@ -232,17 +251,17 @@ function viewEmployees() {
 function viewRoles() {
   db.query('SELECT * FROM roles', (err, roles) => {
     if (err) { console.log(err) }
-    console.log('-------------------------------------')
-    console.log('----------------ROLES----------------')
-    console.log('-------------------------------------')
+    console.log('-----------------------------------------------')
+    console.log('---------------------ROLES---------------------')
+    console.log('-----------------------------------------------')
     console.log('')
     console.log('')
     console.table(roles)
     console.log('')
     console.log('')
-    console.log('--------------------------------------')
-    console.log('----------------ROLES-----------------')
-    console.log('--------------------------------------')
+    console.log('-----------------------------------------------')
+    console.log('---------------------ROLES---------------------')
+    console.log('-----------------------------------------------')
     start()
   })
 }
