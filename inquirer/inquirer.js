@@ -13,7 +13,50 @@ inquirer.prompt(
   }]
 )
 .then((answers) => {
-  db.query()
+ switch (answers) {
+   case answers[0]:
+
+     break;
+   case answers[1]:
+
+     break;
+    case answers[2]:
+
+     break; 
+    case answers[3]:
+
+     break; 
+    case answers[4]:
+
+     break; 
+    case answers[5]:
+
+     break; 
+   case answers[6]:
+
+     break; 
+   case answers[7]:
+
+     break; 
+   case answers[8]:
+
+     break; 
+   case answers[9]:
+
+     break; 
+   case answers[10]:
+
+     break; 
+   case answers[11]:
+
+     break; 
+   case answers[12]:
+
+     break; 
+  
+   default:
+     break;
+ }
 })
   .catch((error) => {
     if (error.isTtyError) {
