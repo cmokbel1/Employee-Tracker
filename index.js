@@ -71,7 +71,7 @@ const start = () => {
          break;
          case 'End':
 
-          // end()
+        end()
       }
     })
     .catch((error) => {
@@ -488,4 +488,15 @@ function deleteEmployees() {
         })
       })
 })
+}
+
+function end() {
+  console.log('-------------------')
+  console.log('~~~~~~~~~~~~~~~~~~~')
+  console.log('Leaving Application')
+  console.log('~~~~~~~~~~~~~~~~~~~')
+  console.log('-------------------')
+  setTimeout((function () {
+    return process.exit(22);
+  }), 0);
 }
