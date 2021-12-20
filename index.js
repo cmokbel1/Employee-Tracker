@@ -56,7 +56,8 @@ const start = () => {
          break;
        case 'View Employees By Manager':
          console.log(answers.todo)
-        //  viewEmployeeByManager();
+        viewEmployeeByManager();
+        console.log('it worked')
          break;
        case 'Delete Department(s)':
          console.log(answers.todo)
@@ -119,4 +120,24 @@ function viewRoles() {
     console.table(roles)
     start()
   })
+}
+
+function viewEmployeeByManager() {
+  inquirer.prompt({
+      type:'list',
+      name:'managers',
+      message:'Select a Manager',
+      choices: [db.query('SELECT * from employee WHERE id = manager_id', (err, managers) => {
+        if (err) { console.log(err) }
+        console.table(managers)
+      })]
+    }).then((answer) => {
+      if (err) { console.log(err) }
+      console.table(db.query('SELECT id  FROM employee WHERE  manager_id', (err, empByMgr) => {
+      if (err) { console.log(err) } console.table(empByMgr)
+    }))
+    // console.table(empByMgr)
+  
+  })
+  start()
 }
