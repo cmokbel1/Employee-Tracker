@@ -26,7 +26,7 @@ const start = () => {
           addDepartment();
           break;
        case 'Add Role(s)':
-          // addRoles();
+          addRoles();
           break;
         case 'Add Employee(s)':
           // addEmployees();
@@ -88,14 +88,43 @@ function addDepartment() {
       message:'Enter Department Name:'
     }
   ])
-  .then((newDepartment => {
+  .then(newDepartment => {
     db.query('INSERT INTO department SET ?', newDepartment, err => {
       if (err) { console.log(err) }
       console.log('New Department Added')
       start()
     })
-  }))
+  })
 }
+
+
+function addRoles() {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'title',
+      message: 'Enter Role Title: '
+    },
+    {
+      type: 'number',
+      name: 'salary',
+      message: 'Enter Salary: '
+    },
+    {
+      type: 'number',
+      name: 'department_id',
+      message: 'Enter Department ID: '
+    }
+    ])
+    .then(newRole => {
+      db.query('INSERT INTO roles SET ?', newRole, err => {
+        if (err) { console.log(err) }
+        console.log('New Role Added')
+        start()
+      })
+    })
+  }
+
 
 // VIEW FUNCTIONS 
 function viewDepartments() {
