@@ -1,66 +1,122 @@
 var inquirer = require('inquirer');
-const mysql = require('mysql2')
-const db = mysql.createConnection('mysql://root:ElsaRoseyButterScotch@localhost:3306/employees_db')
+const { prompt } = require('inquirer');
+const mysql = require('mysql2');
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'ElsaRoseyButterScotch',
+  database: 'employees_db'
+});
+const consoleTable = require('console.table');
+const util = require('util')
 
-inquirer.prompt(
-  [{
-    type: 'list',
-    name: 'todo',
-    message: 'What would you like to do?'
-    choices: ['Add Department(s)', 'Add Role(s)', 'Add Employee(s)', 'View Departments', 'View Roles', 'View Employees', 'Update Employee Roles', 'Update Employee Manager(s)', 'View Employees By Manager', 'Delete Department(s)', 'Delete Role(s)', 'Delete Employee(s)', 'View Total Budget']
-  }]
-)
-  .then((answers) => {
-    switch (answers) {
-      case answers[0]:
-
-        break;
-      case answers[1]:
-
-        break;
-      case answers[2]:
-
-        break;
-      case answers[3]:
-
-        break;
-      case answers[4]:
-
-        break;
-      case answers[5]:
-
-        break;
-      case answers[6]:
-
-        break;
-      case answers[7]:
-
-        break;
-      case answers[8]:
-
-        break;
-      case answers[9]:
-
-        break;
-      case answers[10]:
-
-        break;
-      case answers[11]:
-
-        break;
-      case answers[12]:
-
-        break;
-
-      default:
-        break;
+const start = () => {
+  inquirer.prompt(
+   [
+    {
+     type: 'list',
+      name: 'todo',
+      message: 'Employee Tracher Application, What Would You Like To Do?',
+      choices: ['Add Department(s)', 'Add Role(s)', 'Add Employee(s)', 'View Departments', 'View Roles', 'View Employees', 'Update Employee Roles', 'Update Employee Manager(s)', 'View Employees By Manager', 'Delete Department(s)', 'Delete Role(s)', 'Delete Employee(s)', 'View Total Budget', 'End']
     }
+  ])
+    .then((answers) => {
+     switch (answers.todo) {
+        case 'Add Department(s)':
+          console.log(answers.todo)
+          // addDepartment();
+          break;
+       case 'Add Role(s)':
+         console.log(answers.todo)
+          // addRoles();
+          break;
+        case 'Add Employee(s)':
+         console.log(answers.todo)
+          // addEmployees();
+          break;
+        case 'View Departments':
+         console.log(answers.todo)
+          viewDepartments();
+          break;
+       case 'View Roles':
+         console.log(answers.todo)
+          viewRoles();
+         break;
+       case 'View Employees':
+         console.log(answers.todo)
+          viewEmployees();
+          break;
+       case 'Update Employee Roles':
+         console.log(answers.todo)
+        //  updateEmployeeRoles();
+         break;
+       case 'Update Employee Manager(s)':
+         console.log(answers.todo)
+        //  updateEmployeeManagers();
+         break;
+       case 'View Employees By Manager':
+         console.log(answers.todo)
+        //  viewEmployeeByManager();
+         break;
+       case 'Delete Department(s)':
+         console.log(answers.todo)
+        //  deleteDepartments();
+         break;
+        case 'Delete Role(s)':
+         console.log(answers.todo)
+        //  deleteRoles();
+         break;
+       case 'Delete Employee(s)':
+         console.log(answers.todo)
+        //  deleteEmployees();
+         break;
+        case 'View Total Budget':
+         console.log(answers.todo)
+        //  viewBudget();
+         break;
+         case 'End':
+           console.log(answers.todo)
+          // end()
+      }
+    })
+    .catch((error) => {
+      if (error.isTtyError) {
+        console.log('Prompt could not be rendered')
+      } else {
+        console.log(error)
+      }
+    });
+}
+
+start();
+
+// ADD FUNCTIONS 
+
+// function addDepartment() {
+//   db.query(DEEEZNUIs)
+// }
+
+// VIEW FUNCTIONS 
+function viewDepartments() {
+  db.query('SELECT * FROM department', (err, departments) => {
+    if (err) { console.log(err) }
+    console.table(departments)
+    start()
   })
-  .catch((error) => {
-    if (error.isTtyError) {
-      console.log('Prompt could not be rendered')
-    } else {
-      console.log(error)
-    }
-  });
+}
 
+function viewEmployees() {
+  db.query('SELECT * FROM employee', (err, employees) => {
+    if (err) { console.log(err) }
+    console.table(employees)
+    start()
+  })
+}
+
+function viewRoles() {
+  db.query('SELECT * FROM roles', (err, roles) => {
+    if (err) { console.log(err) }
+    console.table(roles)
+    start()
+  })
+}
