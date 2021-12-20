@@ -56,13 +56,13 @@ const start = () => {
         start()
          break;
        case 'Delete Department(s)':
-        //  deleteDepartments();
+        deleteDepartments();
          break;
         case 'Delete Role(s)':
-        //  deleteRoles();
+        deleteRoles();
          break;
        case 'Delete Employee(s)':
-        //  deleteEmployees();
+        deleteEmployees();
          break;
         case 'View Total Budget':
         //  viewBudget();
@@ -370,4 +370,101 @@ function updateEmployeeManagers() {
         })
     })
   })
+}
+
+// DELETE FUNCTIONS 
+function deleteDepartments() {
+  db.query('SELECT * FROM department', (err, departments) => {
+    if (err) { console.log(err) }
+    console.log('---------------------------------')
+    console.log('-----------DEPARTMENTS-----------')
+    console.log('---------------------------------')
+    console.log('')
+    console.log('')
+    console.table(departments)
+    console.log('')
+    console.log('')
+    console.log('---------------------------------')
+    console.log('-----------DEPARTMENTS-----------')
+    console.log('---------------------------------')
+    console.log('')
+    console.log('')
+    inquirer.prompt([
+      {
+        type:'input',
+        name:'name',
+        message: 'Enter Department Name to be Deleted: '
+      }])
+      .then(deleteDept => {
+        db.query('DELETE FROM department WHERE ?', deleteDept, err => {
+          if (err) { console.log(err) }
+          console.log('Department has been Deleted')
+          start()
+        })
+      })
+  })
+}
+
+function deleteRoles() {
+  db.query('SELECT * FROM roles', (err, roles) => {
+    if (err) { console.log(err) }
+    console.log('-------------------------------------')
+    console.log('----------------ROLES----------------')
+    console.log('-------------------------------------')
+    console.log('')
+    console.log('')
+    console.table(roles)
+    console.log('')
+    console.log('')
+    console.log('--------------------------------------')
+    console.log('----------------ROLES-----------------')
+    console.log('--------------------------------------')
+    console.log('')
+    console.log('')
+    inquirer.prompt([
+      {
+        type: 'input',
+        name: 'id',
+        message: 'Enter Role ID to be Deleted: '
+      }])
+      .then(deleteRole => {
+        db.query('DELETE FROM roles WHERE ?', deleteRole, err => {
+          if (err) { console.log(err) }
+          console.log('Role has been Deleted')
+          start()
+        })
+      })
+  })
+}
+
+function deleteEmployees() {
+  db.query('SELECT * FROM employee', (err, employees) => {
+    if (err) { console.log(err) }
+    console.log('----------------------------------')
+    console.log('-------------EMPLOYEES-----------')
+    console.log('----------------------------------')
+    console.log('')
+    console.log('')
+    console.table(employees)
+    console.log('')
+    console.log('')
+    console.log('---------------------------------')
+    console.log('------------EMPLOYEES------------')
+    console.log('---------------------------------')
+    console.log('')
+    console.log('')
+    inquirer.prompt([
+      {
+        type: 'input',
+        name: 'id',
+        message: 'Enter Employee ID to be Deleted: '
+      }])
+      .then(deleteEmployee => {
+        db.query('DELETE FROM employee WHERE ?', deleteEmployee, err => {
+          if (err) { console.log(err) }
+          console.log('Employee has been Deleted')
+          start()
+        })
+      })
+})
 }
