@@ -49,7 +49,9 @@ const start = () => {
        case 'View Employees By Manager':
         // viewEmployeeByManager();
         console.log('----------------')
+        console.log('----------------')
         console.log('Work in Progress')
+        console.log('----------------')
         console.log('----------------')
         start()
          break;
@@ -142,7 +144,7 @@ function addRoles() {
   })
 }
 function addEmployees() {
-  db.query('SELECT * FROM employee WHERE (id in (SELECT manager_id FROM employee))', (err, managers) => {
+  db.query('SELECT id, first_name, last_name, manager_id FROM employee WHERE (id in (SELECT manager_id FROM employee))', (err, managers) => {
     if (err) { console.log(err) }
     console.log('------------CURRENT MANAGERS------------')
     console.log('----INSERT EMPLOYEE ID AS MANAGER ID----')
@@ -228,7 +230,17 @@ function viewEmployees() {
 function viewRoles() {
   db.query('SELECT * FROM roles', (err, roles) => {
     if (err) { console.log(err) }
+    console.log('-------------------------------------')
+    console.log('----------------ROLES----------------')
+    console.log('-------------------------------------')
+    console.log('')
+    console.log('')
     console.table(roles)
+    console.log('')
+    console.log('')
+    console.log('--------------------------------------')
+    console.log('----------------ROLES-----------------')
+    console.log('--------------------------------------')
     start()
   })
 }
