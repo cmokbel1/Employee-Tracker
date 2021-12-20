@@ -29,7 +29,7 @@ const start = () => {
           addRoles();
           break;
         case 'Add Employee(s)':
-          // addEmployees();
+          addEmployees();
           break;
         case 'View Departments':
           viewDepartments();
@@ -47,8 +47,9 @@ const start = () => {
         //  updateEmployeeManagers();
          break;
        case 'View Employees By Manager':
-        viewEmployeeByManager();
-        console.log('it worked')
+        // viewEmployeeByManager();
+        console.log('Work in Progress')
+        start()
          break;
        case 'Delete Department(s)':
         //  deleteDepartments();
@@ -99,6 +100,11 @@ function addDepartment() {
 
 
 function addRoles() {
+  db.query('SELECT * FROM department', (err, departments) => {
+    if (err) { console.log(err) }
+    console.log('---AVAILABLE DEPARTMENTS---')
+    console.table(departments)
+    console.log('---AVAILABLE DEPARTMENTS---')
   inquirer.prompt([
     {
       type: 'input',
@@ -123,8 +129,45 @@ function addRoles() {
         start()
       })
     })
-  }
-
+  })
+}
+function addEmployees() {
+  db.query('SELECT * FROM employee WHERE (id in (SELECT manager_id FROM employee))', (err, managers) => {
+    if (err) { console.log(err) }
+    console.log('---CURRENT MANAGERS---')
+    console.table(managers)
+    console.log('---CURRENT MANAGERS---')
+  inquirer.prompt([
+    {
+      type:'input',
+      name:'first_name',
+      message: 'Enter First Name: '
+    },
+    {
+      type: 'input',
+      name: 'last_name',
+      message: 'Enter Last Name: '
+    },
+    {
+      type: 'number',
+      name:'roles_id',
+      message: 'Enter Role ID: '
+    },
+    {
+      type:'number',
+      name:'manager_id',
+      message: 'Enter Manager ID: '
+    }
+  ])
+    .then(newEmployee => {
+      db.query('INSERT INTO employee SET ?', newEmployee, err => {
+        if (err) { console.log(err) }
+        console.log('New Employee Added')
+        start()
+      })
+    })
+ })
+}
 
 // VIEW FUNCTIONS 
 function viewDepartments() {
@@ -151,21 +194,27 @@ function viewRoles() {
   })
 }
 
-function viewEmployeeByManager() {
-  inquirer.prompt({
-      type:'list',
-      name:'managers',
-      message:'Select a Manager',
-      choices: [db.query('SELECT * from employee WHERE id = manager_id', (err, managers) => {
-        if (err) { console.log(err) }
-        console.table(managers)
-      })]
-    }).then((answer) => {
-      console.table(db.query('SELECT id  FROM employee WHERE  manager_id', (err, empByMgr) => {
-      if (err) { console.log(err) } console.table(empByMgr)
-    }))
-    // console.table(empByMgr)
+// function viewEmployeeByManager() {
+//   inquirer.prompt({
+//       type:'list',
+//       name:'managers',
+//       message:'Select a Manager',
+//       choices: [db.query('SELECT * from employee WHERE id = manager_id', (err, managers) => {
+//         if (err) { console.log(err) }
+//         console.table(managers)
+//       })]
+//     }).then((answer) => {
+//       console.table(db.query('SELECT id  FROM employee WHERE  manager_id', (err, empByMgr) => {
+//       if (err) { console.log(err) } console.table(empByMgr)
+//     }))
+//     // console.table(empByMgr)
   
-  })
-  start()
+//   })
+//   start()
+// }
+
+// UPDATE FUNCTIONS
+
+function updateEmployeeRoles() {
+  db.query('')
 }
