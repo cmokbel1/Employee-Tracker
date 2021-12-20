@@ -41,14 +41,16 @@ const start = () => {
           viewEmployees();
           break;
        case 'Update Employee Roles':
-        //  updateEmployeeRoles();
+         updateEmployeeRoles();
          break;
        case 'Update Employee Manager(s)':
         //  updateEmployeeManagers();
          break;
        case 'View Employees By Manager':
         // viewEmployeeByManager();
+        console.log('----------------')
         console.log('Work in Progress')
+        console.log('----------------')
         start()
          break;
        case 'Delete Department(s)':
@@ -102,9 +104,17 @@ function addDepartment() {
 function addRoles() {
   db.query('SELECT * FROM department', (err, departments) => {
     if (err) { console.log(err) }
+    console.log('---------------------------')
     console.log('---AVAILABLE DEPARTMENTS---')
+    console.log('---------------------------')
+    console.log('')
+    console.log('')
     console.table(departments)
+    console.log('')
+    console.log('')
+    console.log('---------------------------')
     console.log('---AVAILABLE DEPARTMENTS---')
+    console.log('---------------------------')
   inquirer.prompt([
     {
       type: 'input',
@@ -134,9 +144,17 @@ function addRoles() {
 function addEmployees() {
   db.query('SELECT * FROM employee WHERE (id in (SELECT manager_id FROM employee))', (err, managers) => {
     if (err) { console.log(err) }
-    console.log('---CURRENT MANAGERS---')
+    console.log('------------CURRENT MANAGERS------------')
+    console.log('----INSERT EMPLOYEE ID AS MANAGER ID----')
+    console.log('------------CURRENT MANAGERS------------')
+    console.log('')
+    console.log('')
     console.table(managers)
-    console.log('---CURRENT MANAGERS---')
+    console.log('')
+    console.log('')
+    console.log('------------CURRENT MANAGERS------------')
+    console.log('----INSERT EMPLOYEE ID AS MANAGER ID----')
+    console.log('------------CURRENT MANAGERS------------')
   inquirer.prompt([
     {
       type:'input',
@@ -173,7 +191,18 @@ function addEmployees() {
 function viewDepartments() {
   db.query('SELECT * FROM department', (err, departments) => {
     if (err) { console.log(err) }
+    console.log('---------------------------------')
+    console.log('-----------DEPARTMENTS-----------')
+    console.log('---------------------------------')
+    console.log('')
+    console.log('')
     console.table(departments)
+    console.log('')
+    console.log('')
+    console.log('---------------------------------')
+    console.log('-----------DEPARTMENTS-----------')
+    console.log('---------------------------------')
+
     start()
   })
 }
@@ -181,7 +210,17 @@ function viewDepartments() {
 function viewEmployees() {
   db.query('SELECT * FROM employee', (err, employees) => {
     if (err) { console.log(err) }
+    console.log('----------------------------------')
+    console.log('-------------EMPLOYEES-----------')
+    console.log('----------------------------------')
+    console.log('')
+    console.log('')
     console.table(employees)
+    console.log('')
+    console.log('')
+    console.log('---------------------------------')
+    console.log('------------EMPLOYEES------------')
+    console.log('---------------------------------')
     start()
   })
 }
@@ -216,5 +255,45 @@ function viewRoles() {
 // UPDATE FUNCTIONS
 
 function updateEmployeeRoles() {
-  db.query('')
+  db.query('SELECT * FROM employee', (err, employees) => {
+    if (err) { console.log(err) }
+    console.log('---------------------------')
+    console.log('----AVAILABLE EMPLOYEES----')
+    console.log('---------------------------')
+    console.log('')
+    console.table(employees)
+    console.log('')
+    console.log('---------------------------')
+    console.log('----AVAILABLE EMPLOYEES----')
+    console.log('---------------------------')
+    db.query('SELECT * FROM roles', (err, roles) => {
+      if (err) { console.log(err) }
+      console.log('---------------------------')
+      console.log('------AVAILABLE ROLES------')
+      console.log('---------------------------')
+      console.log('')
+      console.table(roles)
+      console.log('')
+      console.log('---------------------------')
+      console.log('------AVAILABLE ROLES------')
+      console.log('---------------------------')
+    inquirer.prompt([
+      {
+        type: 'input',
+        name:'id',
+        message:'Input Employee ID: '
+      },
+      {
+        type:'input',
+        name:'roles_id',
+        message: 'New Role ID: '
+      }
+    ])
+    .then(updateRole => {
+      db.query('UPDATE employee SET ? WHERE ?', [{ roles_id: updateRole.roles_id }, { id:updateRole.id }],() => {
+        console.log('Employee Role Updated!')
+      })
+    })
+  })
+ })
 }
