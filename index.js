@@ -23,60 +23,47 @@ const start = () => {
     .then((answers) => {
      switch (answers.todo) {
         case 'Add Department(s)':
-          console.log(answers.todo)
-          // addDepartment();
+          addDepartment();
           break;
        case 'Add Role(s)':
-         console.log(answers.todo)
           // addRoles();
           break;
         case 'Add Employee(s)':
-         console.log(answers.todo)
           // addEmployees();
           break;
         case 'View Departments':
-         console.log(answers.todo)
           viewDepartments();
           break;
        case 'View Roles':
-         console.log(answers.todo)
           viewRoles();
          break;
        case 'View Employees':
-         console.log(answers.todo)
           viewEmployees();
           break;
        case 'Update Employee Roles':
-         console.log(answers.todo)
         //  updateEmployeeRoles();
          break;
        case 'Update Employee Manager(s)':
-         console.log(answers.todo)
         //  updateEmployeeManagers();
          break;
        case 'View Employees By Manager':
-         console.log(answers.todo)
         viewEmployeeByManager();
         console.log('it worked')
          break;
        case 'Delete Department(s)':
-         console.log(answers.todo)
         //  deleteDepartments();
          break;
         case 'Delete Role(s)':
-         console.log(answers.todo)
         //  deleteRoles();
          break;
        case 'Delete Employee(s)':
-         console.log(answers.todo)
         //  deleteEmployees();
          break;
         case 'View Total Budget':
-         console.log(answers.todo)
         //  viewBudget();
          break;
          case 'End':
-           console.log(answers.todo)
+
           // end()
       }
     })
@@ -93,9 +80,22 @@ start();
 
 // ADD FUNCTIONS 
 
-// function addDepartment() {
-//   db.query(DEEEZNUIs)
-// }
+function addDepartment() {
+  inquirer.prompt([
+    {
+      type:'input',
+      name:'name',
+      message:'Enter Department Name:'
+    }
+  ])
+  .then((newDepartment => {
+    db.query('INSERT INTO department SET ?', newDepartment, err => {
+      if (err) { console.log(err) }
+      console.log('New Department Added')
+      start()
+    })
+  }))
+}
 
 // VIEW FUNCTIONS 
 function viewDepartments() {
@@ -132,7 +132,6 @@ function viewEmployeeByManager() {
         console.table(managers)
       })]
     }).then((answer) => {
-      if (err) { console.log(err) }
       console.table(db.query('SELECT id  FROM employee WHERE  manager_id', (err, empByMgr) => {
       if (err) { console.log(err) } console.table(empByMgr)
     }))
