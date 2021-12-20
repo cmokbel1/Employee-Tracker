@@ -44,7 +44,7 @@ const start = () => {
          updateEmployeeRoles();
          break;
        case 'Update Employee Manager(s)':
-        //  updateEmployeeManagers();
+        updateEmployeeManagers();
          break;
        case 'View Employees By Manager':
         // viewEmployeeByManager();
@@ -303,9 +303,71 @@ function updateEmployeeRoles() {
     ])
     .then(updateRole => {
       db.query('UPDATE employee SET ? WHERE ?', [{ roles_id: updateRole.roles_id }, { id:updateRole.id }],() => {
+        console.log('~~~~~~~~~~~~~~~~~~~~~~')
+        console.log('~~~~~~~~~~~~~~~~~~~~~~')
         console.log('Employee Role Updated!')
+        console.log('~~~~~~~~~~~~~~~~~~~~~~')
+        console.log('~~~~~~~~~~~~~~~~~~~~~~')
+        console.log('')
+        console.log('')
+        start();
       })
     })
   })
  })
+}
+
+function updateEmployeeManagers() {
+  db.query('SELECT * FROM employee', (err, employees) => {
+    if (err) { console.log(err) }
+    console.log('---------------------------')
+    console.log('----AVAILABLE EMPLOYEES----')
+    console.log('---------------------------')
+    console.log('')
+    console.table(employees)
+    console.log('')
+    console.log('---------------------------')
+    console.log('----AVAILABLE EMPLOYEES----')
+    console.log('---------------------------')
+  db.query('SELECT id, first_name, last_name FROM employee WHERE (id in (SELECT manager_id FROM employee))', (err, managers) => {
+   if (err) { console.log(err) }
+   console.log('------------CURRENT MANAGERS------------')
+   console.log('----INSERT EMPLOYEE ID AS MANAGER ID----')
+   console.log('------------CURRENT MANAGERS------------')
+   console.log('')
+   console.log('')
+   console.table(managers)
+   console.log('')
+   console.log('')
+   console.log('------------CURRENT MANAGERS------------')
+   console.log('----INSERT EMPLOYEE ID AS MANAGER ID----')
+   console.log('------------CURRENT MANAGERS------------')
+   console.log('')
+   console.log('')
+      inquirer.prompt([
+        {
+          type: 'input',
+          name: 'id',
+          message: 'Input Employee ID: '
+        },
+        {
+          type: 'input',
+          name: 'manager_id',
+          message: 'New Manager ID: '
+        }
+      ])
+        .then(updateManager => {
+          db.query('UPDATE employee SET ? WHERE ?', [{ manager_id: updateManager.manager_id }, { id: updateManager.id }], () => {
+            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~')
+            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~')
+            console.log('Employee Manager Updated!')
+            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~')
+            console.log('~~~~~~~~~~~~~~~~~~~~~~~~~')
+            console.log('')
+            console.log('')
+            start();
+          })
+        })
+    })
+  })
 }
