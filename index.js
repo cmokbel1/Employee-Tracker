@@ -8,7 +8,9 @@ const db = mysql.createConnection({
   database: 'employees_db'
 });
 const consoleTable = require('console.table');
-const util = require('util')
+const util = require('util');
+const { symlinkSync } = require('fs');
+var process = require('process');
 
 const start = () => {
   inquirer.prompt(
