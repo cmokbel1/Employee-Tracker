@@ -33,5 +33,9 @@
   2. Repository: https://github.com/cmokbel1
   3. E-mail: claudemokbel@gmail.com
   
-  ## VIDEO PREVIEW
+  ## Video Preview
   https://www.youtube.com/watch?v=ZTYxlquJVmk
+  
+  ## Screenshot
+  
+ ![image](https://user-images.githubusercontent.com/68614831/146982076-a91a0b85-bdc0-4073-b50d-4efd609df993.png)
